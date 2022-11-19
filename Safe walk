@@ -1,0 +1,23 @@
+if callback then
+                oldmove = controlmodule.moveFunction
+                controlmodule.moveFunction = function(Self, vec, facecam)
+                    if entity.isAlive then
+                        local raycastparameters = RaycastParams.new()
+                        raycastparameters.FilterDescendantsInstances = {lplr.Character}
+                        raycastparameters.FilterType = Enum.RaycastFilterType.Blacklist
+                        local ray = workspace:Raycast(entity.character.HumanoidRootPart.Position + (vec * 0.5), Vector3.new(0, -1000, 0), raycastparameters)
+                        local hipheight = (entity.character.Humanoid.AutomaticScalingEnabled and 2 or entity.character.Humanoid.HipHeight)
+                        local ray2 = workspace:Raycast(entity.character.HumanoidRootPart.Position, Vector3.new(0, -hipheight * 2, 0), raycastparameters)
+                        if (ray == nil or ray.Instance.CanCollide == false) and ray2 then
+                            vec = Vector3.zero
+                        end
+                    end
+                    return oldmove(Self, vec, facecam)
+                end
+            else
+                controlmodule.moveFunction = oldmove
+            end
+        end,
+        ["HoverText"] = "lets you not walk off because you are bad"
+    })
+end)
