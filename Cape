@@ -1,0 +1,30 @@
+if callback then
+                vapecapeconnection = lplr.CharacterAdded:Connect(function(char)
+                    spawn(function()
+                        pcall(function() 
+                            Cape(char, getcustomassetfunc("vape/assets/VapeCape.png"))
+                        end)
+                    end)
+                end)
+                if lplr.Character then
+                    spawn(function()
+                        pcall(function() 
+                            Cape(lplr.Character, getcustomassetfunc("vape/assets/VapeCape.png"))
+                        end)
+                    end)
+                end
+            else
+                if vapecapeconnection then
+                    vapecapeconnection:Disconnect()
+                end
+                if lplr.Character then
+                    for i,v in pairs(lplr.Character:GetDescendants()) do
+                        if v.Name == "Cape" then
+                            v:Remove()
+                        end
+                    end
+                end
+            end
+        end
+    })
+end)
